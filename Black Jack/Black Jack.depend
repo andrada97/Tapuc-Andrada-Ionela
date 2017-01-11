@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1484169084 source:c:\users\ionut\desktop\c++\black jack\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<windows.h>
+	<algorithm>
+	<ctime>
+	<vector>
+
