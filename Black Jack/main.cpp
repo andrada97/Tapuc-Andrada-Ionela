@@ -213,6 +213,12 @@ srand(qTime);
 
 int count=0;
 bool CartiImpartite[52];
+int k=1;
+for(int i=0; i<52; i++)
+   {for(int j=0; j<4; j++)CartiImpartite[i]=k;
+   k++;
+   }
+
 int NrCartiDealer=0;
 int CartiDealer[10];
 int NrCartiPlayer=0;
