@@ -28,7 +28,7 @@ cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*"<<endl;
 cout<<"* Apasa ENTER pentru a incepe *" << endl;
 	cin.get();
 system("cls");
-Sleep(400);
+Sleep(300);
 
 cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*"<<endl;
 cout<<"*    Black Jack Utilizator    *"<<endl;
@@ -37,7 +37,7 @@ cout<<endl;
 cout<<endl;
 cout<<"1.Utilizator nou.\n2.Utilizator existent."<<endl;
 cout<<endl;
-cout<<"Raspundeti prin 1 sau 2:";
+cout<<"Raspunde prin 1 sau 2:";
 char raspuns;
 cin>>raspuns;
 system("cls");
@@ -70,15 +70,15 @@ switch(raspuns)
       cout<<endl;
       for(int i=0;i<10;i++)
          {cout<<"~";
-         Sleep(400);
+         Sleep(600);
          }
 
       cin.sync();
       cin.ignore();
       system("cls");
 
-      cout<<"Felicitari! V-ati inregistrat cu succes !"<<endl;
-      Sleep(500);
+      cout<<"Felicitari! Te-ai inregistrat cu succes !"<<endl;
+      Sleep(700);
       system("cls");
       break;}
 
@@ -89,7 +89,7 @@ case '2':
     cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*"<<endl;
 
     inDateDeIntrare.open("NumeUtilizator.dat",ios::in);
-    cout<<"Introduceti numele :";
+    cout<<"Introduce numele tau:";
     std::cin>>NumeUtilizator;
     utilizatori[x].NumeUtilizator=NumeUtilizator;
 
@@ -104,12 +104,12 @@ case '2':
               if(line.compare(InUtilizator)==0)gasit=true;
         inDateDeIntrare.close();
         if(gasit!=0)
-            {cout<<"Bun venit " << NumeUtilizator << endl;
-            Sleep(500);
+            {cout<<"Bun venit,  " << NumeUtilizator <<" !"<< endl;
+            Sleep(1000);
             system("cls");
             }
         else
-            {cout<<"Nu se poate gasi acest utilizator."<<endl;
+            {cout<<"Nu s-a gasit acest utilizator."<<endl;
              IntrareInJoc(x,utilizatori);
         }
     gasit=false;
@@ -139,6 +139,69 @@ default:
   }
   }
 
+
+void ModalitateJoc(bool CartiImpartite[],int CartiPlayer[], int CartiDealer[],int NrCartiDealer,int NrCartiPlayer, int x, Jucator utilizatori[] )
+{char modalitate;
+cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
+ cout<<"*        Black Jack           *"<<endl;
+cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
+ cout<<endl;
+ cout<<"*   Selectati modul de joc :   *"<<endl;
+
+cout<<"1.Joc cu delear-ul.\n2.Joc intre 2 playeri."<<endl;
+cout<<endl;
+cout<<"Raspunde prin 1 sau 2 : "<<endl;
+cin>>modalitate;
+
+switch(modalitate)
+   {case '1':
+       {system("cls");
+        Sleep(200);
+        cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
+        cout<<"*         Black Jack           *"<<endl;
+        cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
+        cout<<endl;
+        cout<<"* Va incepe jocul cu dealer-ul *"<<endl;
+        cout<<"*        Succes !              *"<<endl;
+        cout<<endl;
+        for(int i=0;i<10;i++)
+           {cout<<"~";
+           Sleep(400);
+           }
+        cin.sync();
+        cin.ignore();
+        system("cls");
+     //   JocDealer();
+        break;
+       }
+   case '2':
+       {system("cls");
+        Sleep(200);
+        cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
+        cout<<"*         Black Jack           *"<<endl;
+        cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
+        cout<<endl;
+        cout<<"*  Va incepe jocul 2 x player  *"<<endl;
+        cout<<"*        Succes !              *"<<endl;
+        cout<<endl;
+        for(int i=0;i<10;i++)
+           {cout<<"~";
+           Sleep(400);
+           }
+        cin.sync();
+        cin.ignore();
+        system("cls");
+      //  Joc2playeri();
+        break;
+       }
+   default:
+       {break;}
+   }
+
+
+
+   }
+
 int main()
 {time_t qTime;
 time(&qTime);
@@ -146,16 +209,17 @@ srand(qTime);
 
 int count=0;
 bool CartiImpartite[52];
-int HouseCardCount=0;
-int HouseHand[10];
-int PlayerCardCount=0;
-int PlayerHand[10];
+int NrCartiDealer=0;
+int CartiDealer[10];
+int NrCartiPlayer=0;
+int CartiPlayer[10];
 int x=0;
 const int JUCATORI = 3;
 Jucator utilizatori[JUCATORI];
 
 IntrareInJoc(x,utilizatori);
 
+ModalitateJoc( CartiImpartite, CartiPlayer, CartiDealer, NrCartiDealer, NrCartiPlayer, x, utilizatori );
 system("pause");
 return 0;
 }
