@@ -202,6 +202,10 @@ switch(modalitate)
 
    }
 
+void Amesteca(bool CartiImpartite[])
+{for(int i=0; i<52; i++) CartiImpartite[i]=false;
+}
+
 int main()
 {time_t qTime;
 time(&qTime);
