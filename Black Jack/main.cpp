@@ -221,6 +221,58 @@ int AdunareScor(int Carte,int Scor)
 else Scor=Scor+10;
 }
 
+void AfisareCarte(int Carte)
+{if(Carte==1)
+   {cout<<"    ______    "<<endl;
+    cout<<"   |A     |   "<<endl;
+    cout<<"   |      |   "<<endl;
+    cout<<"   |      |   "<<endl;
+    cout<<"   |      |   "<<endl;
+    cout<<"   |      |   "<<endl;
+    cout<<"   |_____A|   "<<endl;
+   }
+else if(Carte>1 && Carte<11)
+         {cout<<"    ______    "<<endl;
+          cout<<"   |"<<Carte<<"     |   "<<endl;
+          cout<<"   |      |   "<<endl;
+          cout<<"   |      |   "<<endl;
+          cout<<"   |      |   "<<endl;
+          cout<<"   |      |   "<<endl;
+          cout<<"   |_____"<<Carte<<"|   "<<endl;
+   }
+     else if(Carte==11)
+          { cout<<"    ______    "<<endl;
+            cout<<"   |J     |   "<<endl;
+            cout<<"   |      |   "<<endl;
+            cout<<"   |      |   "<<endl;
+            cout<<"   |      |   "<<endl;
+            cout<<"   |      |   "<<endl;
+            cout<<"   |_____J|   "<<endl;
+           }
+          else if(Carte==12)
+                { cout<<"    ______    "<<endl;
+                  cout<<"   |Q     |   "<<endl;
+                  cout<<"   |      |   "<<endl;
+                  cout<<"   |      |   "<<endl;
+                  cout<<"   |      |   "<<endl;
+                  cout<<"   |      |   "<<endl;
+                  cout<<"   |_____Q|   "<<endl;
+                }
+                else  {cout<<"    ______    "<<endl;
+                       cout<<"   |K     |   "<<endl;
+                       cout<<"   |      |   "<<endl;
+                       cout<<"   |      |   "<<endl;
+                       cout<<"   |      |   "<<endl;
+                       cout<<"   |      |   "<<endl;
+                       cout<<"   |_____K|   "<<endl;
+                      }
+
+}
+
+
+
+
+
 
 int main()
 {time_t qTime;
@@ -234,6 +286,8 @@ for(int i=1; i<53; i++)
    {for(int j=0; j<4; j++)CartiImpartite[i]=k;
    k++;
    }
+
+AfisareCarte(5);
 int NrCartiDealer=0;
 int CartiDealer[10];
 int NrCartiPlayer=0;
