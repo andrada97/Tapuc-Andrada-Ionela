@@ -140,7 +140,7 @@ default:
   }
 
 
-void ModalitateJoc(bool CartiImpartite[],int CartiPlayer[], int CartiDealer[],int NrCartiDealer,int NrCartiPlayer, int x, Jucator utilizatori[] )
+void ModalitateJoc(int CartiImpartite[],int CartiPlayer[], int CartiDealer[],int NrCartiDealer,int NrCartiPlayer, int x, Jucator utilizatori[] )
 {char modalitate;
 cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
  cout<<"*        Black Jack           *"<<endl;
@@ -202,9 +202,25 @@ switch(modalitate)
 
    }
 
-void Amesteca(bool CartiImpartite[])
-{for(int i=0; i<52; i++) CartiImpartite[i]=false;
+int DaCarte(int CartiImpartite[])
+{int Ok=0;
+do{int GasireCarte=(rand()%53);
+   if(GasireCarte!=0)
+       {Ok=GasireCarte;
+        if(CartiImpartite[Ok])
+            { if(Ok/4)return Ok/4;
+              else return true;
+            CartiImpartite[Ok]=0;
+            }
+   }
+}while(true);
 }
+
+int AdunareScor(int Carte,int Scor)
+{if(Carte<11)Scor=Scor+Carte;
+else Scor=Scor+10;
+}
+
 
 int main()
 {time_t qTime;
@@ -212,13 +228,12 @@ time(&qTime);
 srand(qTime);
 
 int count=0;
-bool CartiImpartite[52];
+int CartiImpartite[52];
 int k=1;
-for(int i=0; i<52; i++)
+for(int i=1; i<53; i++)
    {for(int j=0; j<4; j++)CartiImpartite[i]=k;
    k++;
    }
-
 int NrCartiDealer=0;
 int CartiDealer[10];
 int NrCartiPlayer=0;
