@@ -8,7 +8,7 @@
 #include <cstring>
 struct Jucator{unsigned int scor=0;
                unsigned int valoare=0;
-               unsigned int profit=0;
+               unsigned int miza=0;
                std :: string NumeUtilizator="";
               };
 
@@ -140,6 +140,168 @@ default:
   }
 
 
+
+
+int DaCarte(int CartiImpartite[])
+{int Ok=0;
+do{int GasireCarte=(rand()%53);
+   if(GasireCarte!=0)
+       {Ok=GasireCarte;
+        if(CartiImpartite[Ok])
+            { if(Ok/4)return Ok/4;
+              else return true;
+            CartiImpartite[Ok]=0;
+            }
+   }
+}while(true);
+}
+
+int AdunareScor(int Carte,int Scor)
+{if(Carte<11)Scor=Scor+Carte;
+else Scor=Scor+10;
+}
+
+void AfisareCarte(int Carte)
+{if(Carte==1)
+   {cout<<endl;
+       cout<<"    ______    "<<endl;
+    cout<<"   |A     |   "<<endl;
+    cout<<"   |      |   "<<endl;
+    cout<<"   |      |   "<<endl;
+    cout<<"   |      |   "<<endl;
+    cout<<"   |      |   "<<endl;
+    cout<<"   |_____A|   "<<endl;
+   }
+
+
+     else if(Carte==11)
+          { cout<<endl;
+              cout<<"    ______    "<<endl;
+            cout<<"   |J     |   "<<endl;
+            cout<<"   |      |   "<<endl;
+            cout<<"   |      |   "<<endl;
+            cout<<"   |      |   "<<endl;
+            cout<<"   |      |   "<<endl;
+            cout<<"   |_____J|   "<<endl;
+           }
+          else if(Carte==12)
+                { cout<<endl;
+                    cout<<"    ______    "<<endl;
+                  cout<<"   |Q     |   "<<endl;
+                  cout<<"   |      |   "<<endl;
+                  cout<<"   |      |   "<<endl;
+                  cout<<"   |      |   "<<endl;
+                  cout<<"   |      |   "<<endl;
+                  cout<<"   |_____Q|   "<<endl;
+                }
+                else if(Carte==13) {cout<<endl;
+                        cout<<"    ______    "<<endl;
+                       cout<<"   |K     |   "<<endl;
+                       cout<<"   |      |   "<<endl;
+                       cout<<"   |      |   "<<endl;
+                       cout<<"   |      |   "<<endl;
+                       cout<<"   |      |   "<<endl;
+                       cout<<"   |_____K|   "<<endl;
+                      }
+                      else
+         {cout<<endl;
+             cout<<"   ______    "<<endl;
+          cout<<"   |"<<Carte<<"     |   "<<endl;
+          cout<<"   |      |   "<<endl;
+          cout<<"   |      |   "<<endl;
+          cout<<"   |      |   "<<endl;
+          cout<<"   |      |   "<<endl;
+          cout<<"   |_____"<<Carte<<"|   "<<endl;
+
+        }
+}
+
+
+void JocDealer(int CartiImpartite[],int CartiDealer[], int CartiPlayer[],int NrCartiDealer, int NrCartiPlayer, int x, Jucator utilizatori[]  )
+{CartiDealer[0]=DaCarte(CartiImpartite);
+ CartiPlayer[0]=DaCarte(CartiImpartite);
+ CartiDealer[1]=DaCarte(CartiImpartite);
+ CartiPlayer[1]=DaCarte(CartiImpartite);
+ NrCartiDealer=2;
+ NrCartiPlayer=2;
+ cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
+ cout<<"*        Black Jack           *"<<endl;
+cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
+cout<<endl;
+cout<<endl;
+cout<<"Banii lui "<<utilizatori[x].NumeUtilizator<<" sunt: "<<utilizatori[x].scor<<endl;
+cout<<endl;
+cout<<"Stabileste miza jocului:";
+int Miza;
+cin>>utilizatori[x].miza;
+while(utilizatori[x].miza> utilizatori[x].scor)
+     {cout<<"Nu ai suficienti bani. Stabileste o alta miza:";
+      cin>>utilizatori[x].miza;
+      }
+Miza=utilizatori[x].miza;
+system("cls");
+cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
+ cout<<"*        Black Jack           *"<<endl;
+cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
+cout<<endl;
+ cout<<"***Cartile dealer-ului sunt: "<<endl;
+ cout<<endl;
+ cout<<"Cartea numarul 1 este:   ";
+ cout<<endl;
+    cout<<"    ______    "<<endl;
+    cout<<"   |?     |   "<<endl;
+    cout<<"   |      |   "<<endl;
+    cout<<"   |      |   "<<endl;
+    cout<<"   |      |   "<<endl;
+    cout<<"   |      |   "<<endl;
+    cout<<"   |_____?|   "<<endl;
+cout<<endl;
+cout<<"Cartea numarul 2 este:   ";
+AfisareCarte(CartiDealer[1]);
+cout<<endl<<endl;
+ cout<<"***Cartile tale sunt: "<<endl;
+ cout<<endl;
+ cout<<"Cartea numarul 1 este:  ";
+AfisareCarte(CartiPlayer[0]);
+cout<<endl;
+cout<< "Cartea numarul 2 este:   ";
+AfisareCarte(CartiPlayer[1]);
+int ScorPlayer=CartiPlayer[0]+CartiPlayer[1];
+cout<<"*    Scorul tau este:   " <<ScorPlayer<<endl;
+
+
+utilizatori[x].scor=utilizatori[x].scor-Miza;
+if(ScorPlayer==21)
+    {cout<<"~ BLACKJACK ~"<<endl;
+     cout<<" Felicitari ! "<<endl;
+    utilizatori[x].scor=utilizatori[x].scor+3/2*Miza;
+    cout<<" Scorul tau este acum: "<<utilizatori[x].scor<<" ."<<endl;
+    }
+int Alegere;
+if(utilizatori[x].scor>utilizatori[x].miza)
+   {cout<<"\nHit(1)    Stay(2)    Double(3) "<<endl;
+    cin>>Alegere;
+   }
+
+   else
+      {cout<<"\nHit(1)          Stay(2)"<<endl;
+    cin>>Alegere;
+      }
+bool Continuare=true;
+if(Alegere=='1')
+    CartiPlayer[NrCartiPlayer++]=DaCarte(CartiImpartite);
+    else if(Alegere=='2') Continuare=false;
+         else if((Alegere=='3') && (utilizatori[x].scor>utilizatori[x].miza))
+                  {CartiPlayer[NrCartiPlayer++]=DaCarte(CartiImpartite);
+                  Continuare=false;
+                   utilizatori[x].scor=utilizatori[x].scor-utilizatori[x].miza;
+                   utilizatori[x].miza*=2;
+                  }
+              else cout<<" Raspuns eronat. Incearca din nou ! "<<endl;
+ScorPlayer= AdunareScor(CartiPlayer[NrCartiPlayer-1],ScorPlayer);
+
+}
+
 void ModalitateJoc(int CartiImpartite[],int CartiPlayer[], int CartiDealer[],int NrCartiDealer,int NrCartiPlayer, int x, Jucator utilizatori[] )
 {char modalitate;
 cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
@@ -171,7 +333,7 @@ switch(modalitate)
         cin.sync();
         cin.ignore();
         system("cls");
-     //   JocDealer();
+        JocDealer(CartiImpartite, CartiDealer,  CartiPlayer, NrCartiDealer, NrCartiPlayer, x, utilizatori);
         break;
        }
    case '2':
@@ -196,89 +358,13 @@ switch(modalitate)
        }
    default:
        {break;}
+      }
    }
-
-
-
-   }
-
-int DaCarte(int CartiImpartite[])
-{int Ok=0;
-do{int GasireCarte=(rand()%53);
-   if(GasireCarte!=0)
-       {Ok=GasireCarte;
-        if(CartiImpartite[Ok])
-            { if(Ok/4)return Ok/4;
-              else return true;
-            CartiImpartite[Ok]=0;
-            }
-   }
-}while(true);
-}
-
-int AdunareScor(int Carte,int Scor)
-{if(Carte<11)Scor=Scor+Carte;
-else Scor=Scor+10;
-}
-
-void AfisareCarte(int Carte)
-{if(Carte==1)
-   {cout<<"    ______    "<<endl;
-    cout<<"   |A     |   "<<endl;
-    cout<<"   |      |   "<<endl;
-    cout<<"   |      |   "<<endl;
-    cout<<"   |      |   "<<endl;
-    cout<<"   |      |   "<<endl;
-    cout<<"   |_____A|   "<<endl;
-   }
-else if(Carte>1 && Carte<11)
-         {cout<<"    ______    "<<endl;
-          cout<<"   |"<<Carte<<"     |   "<<endl;
-          cout<<"   |      |   "<<endl;
-          cout<<"   |      |   "<<endl;
-          cout<<"   |      |   "<<endl;
-          cout<<"   |      |   "<<endl;
-          cout<<"   |_____"<<Carte<<"|   "<<endl;
-   }
-     else if(Carte==11)
-          { cout<<"    ______    "<<endl;
-            cout<<"   |J     |   "<<endl;
-            cout<<"   |      |   "<<endl;
-            cout<<"   |      |   "<<endl;
-            cout<<"   |      |   "<<endl;
-            cout<<"   |      |   "<<endl;
-            cout<<"   |_____J|   "<<endl;
-           }
-          else if(Carte==12)
-                { cout<<"    ______    "<<endl;
-                  cout<<"   |Q     |   "<<endl;
-                  cout<<"   |      |   "<<endl;
-                  cout<<"   |      |   "<<endl;
-                  cout<<"   |      |   "<<endl;
-                  cout<<"   |      |   "<<endl;
-                  cout<<"   |_____Q|   "<<endl;
-                }
-                else  {cout<<"    ______    "<<endl;
-                       cout<<"   |K     |   "<<endl;
-                       cout<<"   |      |   "<<endl;
-                       cout<<"   |      |   "<<endl;
-                       cout<<"   |      |   "<<endl;
-                       cout<<"   |      |   "<<endl;
-                       cout<<"   |_____K|   "<<endl;
-                      }
-
-}
-
-
-
-
-
 
 int main()
 {time_t qTime;
 time(&qTime);
 srand(qTime);
-
 int count=0;
 int CartiImpartite[52];
 int k=1;
@@ -287,7 +373,6 @@ for(int i=1; i<53; i++)
    k++;
    }
 
-AfisareCarte(5);
 int NrCartiDealer=0;
 int CartiDealer[10];
 int NrCartiPlayer=0;
