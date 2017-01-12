@@ -5,51 +5,38 @@
 #include <algorithm>
 #include <ctime>
 #include <vector>
-
+#include <cstring>
 struct Jucator{unsigned int scor=0;
                unsigned int valoare=0;
                unsigned int profit=0;
                std :: string NumeUtilizator="";
               };
 
-void IntrareInJoc(int x, Jucator utilizatori[]);
 
 using namespace std;
-
-int main()
-{time_t qTime;
-time(&qTime);
-srand(qTime);
-
-int count=0;
-bool CartiImpartite[52];
-int HouseCardCount=0;
-int HouseHand[10];
-int PlayerCardCount=0;
-int PlayerHand[10];
-int x=0;
-const int JUCATORI = 3;
-Jucator utilizatori[JUCATORI];
-
-IntrareInJoc(x,utilizatori);
-
-system("pause");
-return 0;
-}
 
 void IntrareInJoc(int x, Jucator utilizatori[])
 {fstream inDateDeIntrare;
 fstream inScor;
 string InUtilizator;
 string NumeUtilizator;
-bool gasit=false;
+
+cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*"<<endl;
+cout<<"*       Black Jack            *"<<endl;
+cout<<"*    Bun venit in joc !       *"<<endl;
+cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*"<<endl;
+cout<<"* Apasa ENTER pentru a incepe *" << endl;
+	cin.get();
+system("cls");
+Sleep(400);
 
 cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*"<<endl;
 cout<<"*    Black Jack Utilizator    *"<<endl;
 cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*"<<endl;
 cout<<endl;
 cout<<endl;
-cout<<"1.Utilizator nou.\n 2.Utilizator existent."<<endl;
+cout<<"1.Utilizator nou.\n2.Utilizator existent."<<endl;
+cout<<endl;
 cout<<"Raspundeti prin 1 sau 2:";
 char raspuns;
 cin>>raspuns;
@@ -110,6 +97,8 @@ case '2':
 
     InUtilizator=NumeUtilizator;
     string line;
+    bool gasit=false;
+
     if(inDateDeIntrare.is_open())
         {while(getline(inDateDeIntrare,line) && !gasit)
               if(line.compare(InUtilizator)==0)gasit=true;
@@ -150,4 +139,24 @@ default:
   }
   }
 
+int main()
+{time_t qTime;
+time(&qTime);
+srand(qTime);
+
+int count=0;
+bool CartiImpartite[52];
+int HouseCardCount=0;
+int HouseHand[10];
+int PlayerCardCount=0;
+int PlayerHand[10];
+int x=0;
+const int JUCATORI = 3;
+Jucator utilizatori[JUCATORI];
+
+IntrareInJoc(x,utilizatori);
+
+system("pause");
+return 0;
+}
 
