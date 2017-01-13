@@ -156,9 +156,15 @@ do{int GasireCarte=(rand()%53);
 }while(true);
 }
 
-int AdunareScor(int Carte,int Scor)
-{if(Carte<11)Scor=Scor+Carte;
-else if(Carte==11 || Carte==12 || Carte==13) Scor=Scor+10;
+int AdunareScor(int CartiJucator[], int NrCartiJucator)
+{int Scor=0;
+int k=0;
+while(k<NrCartiJucator)
+{if(CartiJucator[k]<11)Scor=Scor+CartiJucator[k];
+else if(CartiJucator[k]==11 || CartiJucator[k]==12 || CartiJucator[k]==13) Scor=Scor+10;
+k++;
+}
+return Scor;
 }
 
 void AfisareCarte(int Carte)
@@ -216,16 +222,62 @@ void AfisareCarte(int Carte)
         }
 }
 
+void Hit(int CartiJucator[],int NrCartiJucator,int CartiImpartite[])
+{CartiJucator[NrCartiJucator]=DaCarte(CartiImpartite);
+++NrCartiJucator;
+AfisareCarte(CartiJucator[NrCartiJucator-1]);
+}
 
-void JocDealer(int CartiImpartite[],int CartiDealer[], int CartiPlayer[],int NrCartiDealer, int NrCartiPlayer, int x, Jucator utilizatori[]  )
-{CartiDealer[0]=DaCarte(CartiImpartite);
+void AfisareCarti(int CartiJucator[], int NrCartiJucator)
+{for(int i=1; i<NrCartiJucator;i++)
+
+   {const int UrmCarte=CartiJucator[i];
+    AfisareCarte(UrmCarte);
+   }
+cout<<endl;
+}
+
+
+void MemorareScoruri(int x, Jucator utilizatori[])
+{fstream inScor;
+string line;
+string NumeUtilizator;
+int scor;
+bool gasit=false;
+NumeUtilizator=utilizatori[x].NumeUtilizator;
+scor=utilizatori[x].scor;
+inScor.open("Scor.dat", ios::in | ios::out );
+while(getline(inScor, line) && !gasit)
+     {if(line.compare(NumeUtilizator)==0)
+         {gasit=true;
+         inScor<<scor;
+         }
+     }
+inScor.close();
+}
+
+void AfisareFinala(int CartiDealer[],  int NrCartiDealer, int CartiPlayer,  int NrCartiPlayer)
+{cout<<"Scorul Dealer-ului : "<< AdunareScor(CartiDealer,NrCartiDealer);
+AfisareCarti(CartiDealer,NrCartiDealer);
+cout<<"Scorul tau: "<<AdunareScor(CartiPlayer,NrCartiPlayer);
+cout<<endl;
+}
+
+void JocDealer(int CartiImpartite[],int CartiDealer[], int CartiPlayer[], int NrCartiDealer,  int NrCartiPlayer, int x, Jucator utilizatori[]  )
+{bool Continua=true;
+ int JocNou=1;
+ int Miza;
+ while(Continua==true)
+ CartiDealer[0]=DaCarte(CartiImpartite);
  CartiPlayer[0]=DaCarte(CartiImpartite);
  CartiDealer[1]=DaCarte(CartiImpartite);
+  NrCartiDealer=2;
  CartiPlayer[1]=DaCarte(CartiImpartite);
- NrCartiDealer=2;
  NrCartiPlayer=2;
- int ScorPlayer=0;
- int ScorDealer=0;
+ int ScorPlayer=AdunareScor(CartiPlayer,NrCartiPlayer);
+ int ScorDealer=AdunareScor(CartiDealer,NrCartiDealer);
+ char AlegereJucator;
+ bool ContinuareJucator;
  cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
  cout<<"*        Black Jack           *"<<endl;
 cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
@@ -234,24 +286,31 @@ cout<<endl;
 cout<<"Banii lui "<<utilizatori[x].NumeUtilizator<<" sunt: "<<utilizatori[x].scor<<endl;
 cout<<endl;
 cout<<"Stabileste miza jocului:";
-int Miza;
-cin>>utilizatori[x].miza;
+cin>>Miza;
+system("cls");
 while(utilizatori[x].miza> utilizatori[x].scor)
      {cout<<"Nu ai suficienti bani. Stabileste o alta miza:";
       cin>>utilizatori[x].miza;
       }
-Miza=utilizatori[x].miza;
-bool Continuare=true;
 system("cls");
-do{
 
 cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
  cout<<"*        Black Jack           *"<<endl;
 cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
 cout<<endl;
- cout<<"***Cartile dealer-ului sunt: "<<endl;
+utilizatori[x].scor=utilizatori[x].scor-Miza;
+cout<<"Scorul tau este acum:"<<utilizatori[x].scor<<endl;
+cout<<endl;
+
+do{
+cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
+ cout<<"*        Black Jack           *"<<endl;
+cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
+cout<<endl;
+cout<<"** Randul dealer-ului **";
+cout<<"~~~~~~~~~~~~~~~~~~~~~~~~";
+ cout<<"***Cartile dealerului sunt: "<<endl;
  cout<<endl;
- cout<<"Cartea numarul 1 este:   ";
  cout<<endl;
     cout<<"    ______    "<<endl;
     cout<<"   |?     |   "<<endl;
@@ -261,28 +320,13 @@ cout<<endl;
     cout<<"   |      |   "<<endl;
     cout<<"   |_____?|   "<<endl;
 cout<<endl;
-for(int i=1;i<NrCartiDealer;i++)
- {cout<<"Cartea numarul "<<i+1<<" este:  ";
-       AfisareCarte(CartiDealer[i]);
-cout<<endl;
- }
-for(int i=0;i<NrCartiDealer;i++)
-        ScorDealer=ScorDealer+ AdunareScor(CartiDealer[i],ScorDealer);
-
+AfisareCarte(CartiDealer[1]);
+ cout<<endl;
+ cout<<"*** Este randul tau ***";
+ cout<<"~~~~~~~~~~~~~~~~~~~~~~~";
  cout<<"***Cartile tale sunt: "<<endl;
  cout<<endl;
- for(int i=0;i<NrCartiPlayer;i++)
- {cout<<"Cartea numarul "<<i+1<<" este:  ";
-AfisareCarte(CartiPlayer[i]);
-cout<<endl;
- }
-  for(int i=0;i<NrCartiPlayer;i++)
-        ScorPlayer=ScorPlayer+ AdunareScor(CartiPlayer[i],ScorPlayer);
-
-cout<<"*    Scorul tau este:   " <<ScorPlayer<<endl;
-
-
-utilizatori[x].scor=utilizatori[x].scor-Miza;
+ AfisareCarti(CartiPlayer,NrCartiPlayer);
 
 if( NrCartiPlayer==2 && ScorPlayer==21)
     {cout<<"~ BLACKJACK ~"<<endl;
@@ -290,46 +334,101 @@ if( NrCartiPlayer==2 && ScorPlayer==21)
     utilizatori[x].scor=utilizatori[x].scor+3/2*Miza;
     cout<<" Scorul tau este acum: "<<utilizatori[x].scor<<" ."<<endl;
     }
-int Alegere;
 if(utilizatori[x].scor>utilizatori[x].miza)
    {cout<<"\nHit(1)    Stay(2)    Double(3) "<<endl;
-    cin>>Alegere;
+    cin>>AlegereJucator;
    }
 
    else
       {cout<<"\nHit(1)          Stay(2)"<<endl;
-    cin>>Alegere;
+    cin>>AlegereJucator;
       }
 
-if(Alegere=='1')
-    {CartiPlayer[NrCartiPlayer]=DaCarte(CartiImpartite);
-    ++NrCartiPlayer;}
-    else if(Alegere=='2') Continuare=false;
-         else if((Alegere=='3') && (utilizatori[x].scor>utilizatori[x].miza))
-                  {CartiPlayer[NrCartiPlayer++]=DaCarte(CartiImpartite);
-                  Continuare=false;
-                   utilizatori[x].scor=utilizatori[x].scor-utilizatori[x].miza;
+if(AlegereJucator=='1')Hit(CartiPlayer,NrCartiPlayer,CartiImpartite);
+    else if(AlegereJucator=='2') ContinuareJucator=false;
+         else if((AlegereJucator=='3') && (utilizatori[x].scor>utilizatori[x].miza))
+                  {Hit(CartiPlayer,NrCartiPlayer,CartiImpartite);
+                  ContinuareJucator=false;
                    utilizatori[x].miza*=2;
                   }
               else cout<<" Raspuns eronat. Incearca din nou ! "<<endl;
-ScorPlayer= ScorPlayer+ AdunareScor(CartiPlayer[NrCartiPlayer-1],ScorPlayer);
-system("cls");
-}while(Continuare==true && ScorPlayer < 22);
+ScorPlayer= AdunareScor(CartiPlayer,NrCartiPlayer);
+}while(ContinuareJucator && ScorPlayer<22);
 
 if(ScorPlayer>21)
-    {cout<<"Ai pierdut ! "<<endl;
+    {cout<<endl;
+    MemorareScoruri(x,utilizatori);
+    cout<<"Ai pierdut ! "<<endl;
+    cout<<"Dealer-ul a castigat ."<<endl;
     cout<<"Scorul tau acum este:"<<utilizatori[x].scor<<endl;
+    AfisareFinala(CartiDealer,NrCartiDealer,CartiPlayer,NrCartiPlayer);
     }
 
 else
-    if(ScorDealer<17)
-       while(ScorDealer<17)
-            {CartiDealer[NrCartiDealer]=DaCarte(CartiImpartite);
-             ++NrCartiDealer;
-             ScorDealer=ScorDealer+ AdunareScor(CartiDealer[NrCartiDealer],ScorDealer);
-            }
-}
+     {ScorDealer=AdunareScor(CartiDealer,NrCartiDealer);
 
+      while(ScorDealer<17)
+            {Hit(CartiDealer,NrCartiDealer,CartiImpartite);
+             ScorDealer=AdunareScor(CartiDealer,NrCartiDealer);
+            }
+
+bool DealerPrins=(ScorDealer > 21);
+if(DealerPrins)
+    {system("cls");
+     cout<<"Ai castigat ! " <<endl;
+     MemorareScoruri(x,utilizatori);
+     Miza=Miza*2;
+     utilizatori[x].scor=Miza + utilizatori[x].scor;
+     AfisareFinala(CartiDealer,NrCartiDealer,CartiPlayer,NrCartiPlayer);
+    }
+
+else {
+   if (ScorDealer<ScorPlayer)
+      {system("cls");
+      cout<< "~~~ AI CASTIGAT ~~~" <<endl;
+       MemorareScoruri(x,utilizatori);
+       Miza=Miza*2;
+       cout<<"Ai castigat "<< Miza <<endl;
+      AfisareFinala(CartiDealer,NrCartiDealer,CartiPlayer,NrCartiPlayer);
+      }
+
+    else
+       if (ScorDealer == ScorPlayer)
+      {system("cls");
+       cout<< "** EGALITATE **" <<endl;
+
+       MemorareScoruri(x,utilizatori);
+       utilizatori[x].scor = Miza+ utilizatori[x].scor ;
+
+     AfisareFinala(CartiDealer,NrCartiDealer,CartiPlayer,NrCartiPlayer);
+      }
+
+    else
+        {system("cls");
+        cout<<" Ai pierdut, iar dealer-ul a castigat. "<<endl;
+        MemorareScoruri(x,utilizatori);
+        AfisareFinala(CartiDealer,NrCartiDealer,CartiPlayer,NrCartiPlayer);
+
+        }
+    }
+}
+system("pause");
+system("cls");
+cout<<"Incepi o noua runda? "<<endl;
+cout<<"Raspunde cu Da(d) sau Nu(n) . "<<endl;
+cin>>JocNou;
+
+while(!(JocNou==1 || JocNou==2))
+      {cout<<" Raspunsul tau nu este valid."<<endl;
+       cout<<"Incearca din nou."<<endl;
+       cin>>JocNou;
+      }
+if(JocNou==1)
+    {Continua=true;
+     system("cls");
+    }
+   else Continua=false;
+}
 void ModalitateJoc(int CartiImpartite[],int CartiPlayer[], int CartiDealer[],int NrCartiDealer,int NrCartiPlayer, int x, Jucator utilizatori[] )
 {char modalitate;
 cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
