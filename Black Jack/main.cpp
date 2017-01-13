@@ -229,7 +229,7 @@ AfisareCarte(CartiJucator[NrCartiJucator-1]);
 }
 
 void AfisareCarti(int CartiJucator[], int NrCartiJucator)
-{for(int i=1; i<NrCartiJucator;i++)
+{for(int i=0; i<NrCartiJucator;i++)
 
    {const int UrmCarte=CartiJucator[i];
     AfisareCarte(UrmCarte);
@@ -256,7 +256,7 @@ while(getline(inScor, line) && !gasit)
 inScor.close();
 }
 
-void AfisareFinala(int CartiDealer[],  int NrCartiDealer, int CartiPlayer,  int NrCartiPlayer)
+void AfisareFinala(int CartiDealer[],  int NrCartiDealer, int CartiPlayer[],  int NrCartiPlayer)
 {cout<<"Scorul Dealer-ului : "<< AdunareScor(CartiDealer,NrCartiDealer);
 AfisareCarti(CartiDealer,NrCartiDealer);
 cout<<"Scorul tau: "<<AdunareScor(CartiPlayer,NrCartiPlayer);
@@ -268,7 +268,7 @@ void JocDealer(int CartiImpartite[],int CartiDealer[], int CartiPlayer[], int Nr
  int JocNou=1;
  int Miza;
  while(Continua==true)
- CartiDealer[0]=DaCarte(CartiImpartite);
+ {CartiDealer[0]=DaCarte(CartiImpartite);
  CartiPlayer[0]=DaCarte(CartiImpartite);
  CartiDealer[1]=DaCarte(CartiImpartite);
   NrCartiDealer=2;
@@ -304,13 +304,13 @@ cout<<endl;
 
 do{
 cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
- cout<<"*        Black Jack           *"<<endl;
-cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
-cout<<endl;
-cout<<"** Randul dealer-ului **";
-cout<<"~~~~~~~~~~~~~~~~~~~~~~~~";
+
+cout<<"** Randul dealer-ului **"<<endl;
+cout<<"~~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
  cout<<"***Cartile dealerului sunt: "<<endl;
  cout<<endl;
+ if(NrCartiDealer==2)
+ {
  cout<<endl;
     cout<<"    ______    "<<endl;
     cout<<"   |?     |   "<<endl;
@@ -321,9 +321,10 @@ cout<<"~~~~~~~~~~~~~~~~~~~~~~~~";
     cout<<"   |_____?|   "<<endl;
 cout<<endl;
 AfisareCarte(CartiDealer[1]);
- cout<<endl;
- cout<<"*** Este randul tau ***";
- cout<<"~~~~~~~~~~~~~~~~~~~~~~~";
+ cout<<endl;}
+ else AfisareCarti(CartiDealer,NrCartiDealer);
+ cout<<"*** Este randul tau ***"<<endl;
+ cout<<"~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
  cout<<"***Cartile tale sunt: "<<endl;
  cout<<endl;
  AfisareCarti(CartiPlayer,NrCartiPlayer);
@@ -344,7 +345,7 @@ if(utilizatori[x].scor>utilizatori[x].miza)
     cin>>AlegereJucator;
       }
 
-if(AlegereJucator=='1')Hit(CartiPlayer,NrCartiPlayer,CartiImpartite);
+if(AlegereJucator=='1') Hit(CartiPlayer,NrCartiPlayer,CartiImpartite);
     else if(AlegereJucator=='2') ContinuareJucator=false;
          else if((AlegereJucator=='3') && (utilizatori[x].scor>utilizatori[x].miza))
                   {Hit(CartiPlayer,NrCartiPlayer,CartiImpartite);
@@ -429,6 +430,10 @@ if(JocNou==1)
     }
    else Continua=false;
 }
+
+}
+
+
 void ModalitateJoc(int CartiImpartite[],int CartiPlayer[], int CartiDealer[],int NrCartiDealer,int NrCartiPlayer, int x, Jucator utilizatori[] )
 {char modalitate;
 cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
