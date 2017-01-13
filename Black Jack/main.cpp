@@ -158,7 +158,7 @@ do{int GasireCarte=(rand()%53);
 
 int AdunareScor(int Carte,int Scor)
 {if(Carte<11)Scor=Scor+Carte;
-else Scor=Scor+10;
+else if(Carte==11 || Carte==12 || Carte==13) Scor=Scor+10;
 }
 
 void AfisareCarte(int Carte)
@@ -225,6 +225,7 @@ void JocDealer(int CartiImpartite[],int CartiDealer[], int CartiPlayer[],int NrC
  NrCartiDealer=2;
  NrCartiPlayer=2;
  int ScorPlayer=0;
+ int ScorDealer=0;
  cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
  cout<<"*        Black Jack           *"<<endl;
 cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
@@ -262,10 +263,11 @@ cout<<endl;
 cout<<endl;
 for(int i=1;i<NrCartiDealer;i++)
  {cout<<"Cartea numarul "<<i+1<<" este:  ";
-AfisareCarte(CartiDealer[i]);
+       AfisareCarte(CartiDealer[i]);
 cout<<endl;
  }
-
+for(int i=0;i<NrCartiDealer;i++)
+        ScorDealer=ScorDealer+ AdunareScor(CartiDealer[i],ScorDealer);
 
  cout<<"***Cartile tale sunt: "<<endl;
  cout<<endl;
@@ -275,7 +277,7 @@ AfisareCarte(CartiPlayer[i]);
 cout<<endl;
  }
   for(int i=0;i<NrCartiPlayer;i++)
-        ScorPlayer=ScorPlayer+CartiPlayer[i];
+        ScorPlayer=ScorPlayer+ AdunareScor(CartiPlayer[i],ScorPlayer);
 
 cout<<"*    Scorul tau este:   " <<ScorPlayer<<endl;
 
@@ -310,10 +312,22 @@ if(Alegere=='1')
                    utilizatori[x].miza*=2;
                   }
               else cout<<" Raspuns eronat. Incearca din nou ! "<<endl;
-ScorPlayer= AdunareScor(CartiPlayer[NrCartiPlayer-1],ScorPlayer);
+ScorPlayer= ScorPlayer+ AdunareScor(CartiPlayer[NrCartiPlayer-1],ScorPlayer);
 system("cls");
 }while(Continuare==true && ScorPlayer < 22);
 
+if(ScorPlayer>21)
+    {cout<<"Ai pierdut ! "<<endl;
+    cout<<"Scorul tau acum este:"<<utilizatori[x].scor<<endl;
+    }
+
+else
+    if(ScorDealer<17)
+       while(ScorDealer<17)
+            {CartiDealer[NrCartiDealer]=DaCarte(CartiImpartite);
+             ++NrCartiDealer;
+             ScorDealer=ScorDealer+ AdunareScor(CartiDealer[NrCartiDealer],ScorDealer);
+            }
 }
 
 void ModalitateJoc(int CartiImpartite[],int CartiPlayer[], int CartiDealer[],int NrCartiDealer,int NrCartiPlayer, int x, Jucator utilizatori[] )
