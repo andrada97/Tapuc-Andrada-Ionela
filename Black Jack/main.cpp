@@ -12,6 +12,14 @@ struct Jucator
     unsigned int miza=0;
     std :: string NumeUtilizator="";
 };
+struct Jucatori
+{
+    unsigned int bani=0;
+    unsigned int miza=0;
+    int cartijucatori[10];
+    int nrcartijucatori;
+    std :: string NumeUtilizator="";
+};
 
 
 using namespace std;
@@ -496,7 +504,7 @@ void JocDealer(int CartiImpartite[],int CartiDealer[], int CartiPlayer[], int Nr
 
 }
 
-void Joc2Players(int CartiImpartite[], int CartiJucator[], int NrCartiJucator,int x, Jucator utilizatori[])
+/*void Joc2Players(int CartiImpartite[],int x, Jucatori utilizatori[])
 {bool Continuare=true;
 while(Continuare==true)
 {int Miza=0;
@@ -522,11 +530,11 @@ for(int i=0; i<2; i++)
     Castig=2*Miza;
     char AlegereJucator;
     bool ContinuareJucator=true;
-    CartiJucator[0]=DaCarte(CartiImpartite);
-    CartiJucator[1]=DaCarte(CartiImpartite);
-    NrCartiJucator=2;
+    utilizatori[i].cartijucatori[0]=DaCarte(CartiImpartite);
+    utilizatori[i].cartijucatori[1]=DaCarte(CartiImpartite);
+    utilizatori[i].nrcartijucatori=2;
     int ScorJucator;
-    ScorJucator=AdunareScor(CartiJucator,NrCartiJucator);
+    ScorJucator=AdunareScor(utilizatori[i].cartijucatori,utilizatori[i].nrcartijucatori);
     cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
         cout<<"*        Black Jack           *"<<endl;
         cout<<"*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*" << endl;
@@ -538,7 +546,7 @@ for(int i=0; i<2; i++)
     cout<<"Bani ramasi ai lui "<<utilizatori[i].NumeUtilizator <<" :"<<utilizatori[i].bani<<endl;
 
     do{
-      cout<<"Scorul lui "<<utilizatori[i].NumeUtilizator<<" :"<<AdunareScor(CartiJucator,NrCartiJucator)<<endl;
+      cout<<"Scorul lui "<<utilizatori[i].NumeUtilizator<<" :"<<AdunareScor(utilizatori[i].cartijucatori,utilizatori[i].nrcartijucatori)<<endl;
       AfisareCarti(CartiJucator,NrCartiJucator);
 
       if( NrCartiJucator==2 && ScorJucator==21)
@@ -588,7 +596,7 @@ for(int i=0; i<2; i++)
 
 }
 
-
+*/
 
 void ModalitateJoc(int CartiImpartite[],int CartiPlayer[], int CartiDealer[],int NrCartiDealer,int NrCartiPlayer, int x, Jucator utilizatori[] )
 {
@@ -647,7 +655,7 @@ void ModalitateJoc(int CartiImpartite[],int CartiPlayer[], int CartiDealer[],int
         cin.sync();
         cin.ignore();
         system("cls");
-          Joc2Players(CartiImpartite,CartiPlayer,NrCartiPlayer,x,utilizatori);
+/*          Joc2Players(CartiImpartite,CartiPlayer,NrCartiPlayer,x,utilizatori);*/
         break;
     }
     default:
